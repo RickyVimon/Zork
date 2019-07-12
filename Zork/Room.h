@@ -1,10 +1,16 @@
 #pragma once
 #include "Entity.h"
-class Room :
-	public Entity
+#include <string>
+#include <list>
+
+using namespace std;
+
+class Room : public Entity
 {
+
 public:
-	Room();
+	Room(const char* name, const char* description);
 	~Room();
+
 };
 

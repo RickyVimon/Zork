@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "World.h"
+#include "Room.h"
+#include "Exit.h"
 
 
 World::World()
 {
-<<<<<<< Updated upstream
-=======
+
 	//Creating all the rooms in the map:
 
 	Room* entrance = new Room("Entrance", "\nThis is the training area, where your adventure starts, you can practice fighting against some dummies to get in shape for tha adventures you will face later on. You can see some fighting dummies and a closed door behind them. \n");
@@ -15,13 +16,12 @@ World::World()
 	Room* garden = new Room("Royal Garden", "\nThe gardens of the royality have been the jewel of the crown, with flowers from all the colours of the rainbow. There is a wanter fountain in the middle of the garden and a huge door on the north.\n");
 	Room* hall = new Room("King's Hall", "\nThis is the hall of the castle, you can see the King's Throne shinig at the end of the saloon.\n");
 
-	
 	Exit* entrance_door = new Exit("Entrance door", "Una puerta de madera con clavos de metal", entrance, coutyard);
 
 	entities.push_back(entrance);
 	entities.push_back(coutyard);
 	entities.push_back(entrance_door);
->>>>>>> Stashed changes
+
 }
 
 
