@@ -21,8 +21,8 @@ public:
 	virtual ~Entity();
 
 	EntityType type;
-	string name;
-	string description;
+    string name;
+    string description;
 
 	Entity* parent;
 	list<Entity*> container;

@@ -16,11 +16,24 @@ World::World()
 	Room* garden = new Room("Royal Garden", "\nThe gardens of the royality have been the jewel of the crown, with flowers from all the colours of the rainbow. There is a wanter fountain in the middle of the garden and a huge door on the north.\n");
 	Room* hall = new Room("King's Hall", "\nThis is the hall of the castle, you can see the King's Throne shinig at the end of the saloon.\n");
 
-	Exit* entrance_door = new Exit("Entrance door", "Una puerta de madera con clavos de metal", entrance, coutyard);
-
 	entities.push_back(entrance);
 	entities.push_back(coutyard);
+	entities.push_back(armory);
+	entities.push_back(barracks);
+	entities.push_back(garden);
+	entities.push_back(hall);
+
+	Exit* entrance_door = new Exit("North", "South", "Entrance door", "", entrance, coutyard);
+	Exit* east_corridor = new Exit("East","West", "Armory corridor", "", coutyard, armory);
+	Exit* west_corrifor = new Exit("West","East", "Barracks corridor", "", coutyard, barracks);
+	Exit* stairs = new Exit("North", "South", "Garden stairs", "", coutyard, garden);
+	Exit* hall_door = new Exit("North", "South", "Hall's Door", "", garden, hall);
+
 	entities.push_back(entrance_door);
+	entities.push_back(east_corridor);
+	entities.push_back(west_corrifor);
+	entities.push_back(stairs);
+	entities.push_back(hall_door);
 
 }
 
