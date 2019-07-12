@@ -2,12 +2,13 @@
 #include "World.h"
 #include "Room.h"
 #include "Exit.h"
+#include "Item.h"
 
 
 World::World()
 {
 
-	//Creating all the rooms in the map:
+	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
 
 	Room* entrance = new Room("Entrance", "\nThis is the training area, where your adventure starts, you can practice fighting against some dummies to get in shape for tha adventures you will face later on. You can see some fighting dummies and a closed door behind them. \n");
 	Room* coutyard = new Room("Coutyard", "\nYou are in the coutyard of the castle, in the central part of it you can see a some dead bodies with the colours of the guards around. There is a big door in the north direction, at the end of the stairs, there is also two other small doors, at each other sides of the courtyard. \n");
@@ -34,6 +35,15 @@ World::World()
 	entities.push_back(west_corrifor);
 	entities.push_back(stairs);
 	entities.push_back(hall_door);
+
+	//Creating all Items:--------------------------------------------------------------------------------------------------------------
+	
+	Item* chest = new Item("Chest", "Captain's chest", barracks);
+	Item* hall_key = new Item("Hall's Key","It has the symbol of the royalty family on the bottom", chest);
+	Item* sword = new Item("Sword", "A one-handed sword", armory);
+	Item* shield = new Item("Shield", "A wooden rounded shape shield", armory);
+	Item* dane_axe = new Item("Dane Axe", "A great axe with a long wooden shaft of around 1,5 meters", armory);
+	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory);
 
 }
 
