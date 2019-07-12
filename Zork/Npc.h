@@ -4,7 +4,7 @@ class Npc :
 	public Creature
 {
 public:
-	Npc();
+	Npc(const char* name, const char* description, Room* room);
 	~Npc();
 };
 

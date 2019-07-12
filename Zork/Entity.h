@@ -17,8 +17,8 @@ enum EntityType {
 class Entity
 {
 public:
-	Entity();
-	~Entity();
+	Entity(const char* name, const char* description, Entity* parent);
+	virtual ~Entity();
 
 	EntityType type;
 	string name;

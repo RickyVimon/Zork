@@ -4,7 +4,7 @@ class Item :
 	public Entity
 {
 public:
-	Item();
+	Item(const char* name, const char* description, Entity* parent);
 	~Item();
 };
 
