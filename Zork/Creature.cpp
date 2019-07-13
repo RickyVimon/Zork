@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Creature.h"
 
-Creature::Creature(const char* name, const char* description, Room* room) :
+Creature::Creature(string name, string description, Room* room) :
 	Entity(name, description, (Entity*)room)
 {
 
@@ -21,6 +21,6 @@ int Creature::Attack(Item* weapon, Creature* enemy) {
 	return 0;
 }
 
-void Creature::SetStats(const char* name) {
+void Creature::SetStats(string name) {
 
 }

@@ -1,16 +1,17 @@
 #pragma once
 #include "Creature.h"
 #include "Room.h"
-#include "Item.h"
+#include <nlohmann/json.hpp>
 
-class Enemy :
-	public Creature
+using namespace std;
+
+class Enemy : public Creature
 {
 public:
-	Enemy(const char* name, const char* description, Room* room);	
+	Enemy(string name, string description, Room* room);
 	~Enemy();
 
-	void SetStats(const char * name);
+	void SetStats(string name);
 
 };
 

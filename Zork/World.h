@@ -11,6 +11,5 @@ public:
 	~World();
 	bool ParseCommand();
 	vector<Entity*> entities;
-
 };
 

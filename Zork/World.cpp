@@ -1,12 +1,22 @@
 #include "pch.h"
 #include "World.h"
+#include "Entity.h"
 #include "Room.h"
 #include "Exit.h"
 #include "Item.h"
+#include <conio.h>
+#include <iostream>
+#include <string>
+#include <ctype.h>
+#include "Player.h"
+//#include "Enemy.h"
+//#include "Creature.h"
 
 
 World::World()
 {
+
+	
 
 	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
 
@@ -45,6 +55,65 @@ World::World()
 	Item* dane_axe = new Item("Dane Axe", "A great axe with a long wooden shaft of around 1,5 meters", armory);
 	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory);
 
+	//Enemy* dummy = new Enemy("Dummy", "lalalala", entrance);
+
+	//Creating Player:---------------------------------------------------------------------------------------------------------------
+	bool char_created = 0;
+	char key;
+	string input_text;
+	string name;
+	string char_description = "It's you.";
+
+	cout << "First of all, whats your name?\n";
+	cin >> name;
+	Player* player = new Player(name, char_description , entrance);
+	cout << "Welcome " << name << "!. In this tutorial, you can choose to become one of the 3 fighters classes.\n";
+	cout << "\n- Berserker: These elite warriors can use the most powerful weapon of the game, the dane axes. This class if focused on attack and dealing lots of damage.\n";
+	cout << "\n- Slayer: They are masters of the sword and the shield, well balanced class which can deal good damage and algo good deffensive stats.\n";
+	cout << "\n- Lancer: Lancer are the first line forces, equiped with a shield and a deadly spear. This class is more focused of defensive but the change of inflicting a critical is higher because of their spears.\n";
+	cout << "\n\n So, have you decided? Do you want to become a BERSERKER, a SLAYER or a LANCER?\n";
+
+	while (!char_created)
+	{
+		key = _getch();
+		if (key == '\b') // backspace
+		{
+			if (input_text.length() > 0)
+			{
+				input_text.pop_back();
+				//cout << BACKSPACE;
+				cout << '\b';
+				cout << " ";
+				cout << '\b';
+			}
+		}
+		else if (key != '\r') // !return
+		{
+			input_text += key;
+			cout << key;
+		}
+		else { //return
+			const char* c = input_text.c_str();
+		
+			if (input_text == "BERSERKER" || input_text == "Berserker" || input_text == "berserker") {
+				player->SetStats(name, BERSERKER);
+				char_created = true;
+			}
+			else if (input_text == "SLAYER" || input_text == "Slayer" || input_text == "slayer") {
+				player->SetStats(name, SLAYER);
+				char_created = true;
+			}
+			else if (input_text == "LANCER" || input_text == "Lancer" || input_text == "lancer") {
+				player->SetStats(name, LANCER);
+				char_created = true;
+			}
+			else {
+				cout << "Sorry, I dont understand you. Do you want to become a BERSERKER, a SLAYER or a LANCER?\n";
+				input_text = "";
+			}
+		}
+	}
+
 }
 
 
@@ -60,3 +129,4 @@ bool World::ParseCommand()
 
 	return correct_parse;
 }
+

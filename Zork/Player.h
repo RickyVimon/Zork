@@ -7,12 +7,11 @@ enum Hero_Class {
 	LANCER
 };
 
-class Player :
-	public Creature
+class Player : public Creature
 {
 public:
-	Player(const char* name, const char* description, Room* room);
+	Player(string name, string description, Room* room);
 	~Player();
-	void SetStats(const char* name, Hero_Class role);
+	void SetStats(string name, Hero_Class role);
 };
 

@@ -2,7 +2,7 @@
 #include "Player.h"
 
 
-Player::Player(const char* name, const char* description, Room* room) :
+Player::Player(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
 }
@@ -12,7 +12,7 @@ Player::~Player()
 {
 }
 
-void Player::SetStats(const char* name, Hero_Class role)
+void Player::SetStats(string name, Hero_Class role)
 {
 	switch (role) {
 	case BERSERKER:
@@ -31,12 +31,12 @@ void Player::SetStats(const char* name, Hero_Class role)
 		con = 12;
 		break;
 	}
+	lvl = 1;
+	str_mod = (str - 10) / 2;
+	dex_mod = (dex - 10) / 2;
+	con_mod = (con - 10) / 2;
 
-	int str_mod = (str - 10) / 2;
-	int dex_mod = (dex - 10) / 2;
-	int con_mod = (con - 10) / 2;
-
-	max_health = con * 2;
+	max_health = con * lvl;
 	health = max_health;
 	ac = 10;
 

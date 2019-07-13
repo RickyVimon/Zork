@@ -8,7 +8,7 @@ class Exit :
 	public Entity
 {
 public:
-	Exit(const char* direction_origin, const char* direction_destination, const char* name, const char* description, Room* origin, Room* destination);
+	Exit(string direction_origin, string direction_destination, string name, string description, Room* origin, Room* destination);
 	~Exit();
 private:
 	Room* origin;

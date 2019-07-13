@@ -1,0 +1,18 @@
+{
+  "Dummy": {
+    "str": 1,
+    "dex": 1,
+    "con": 20,
+    "max_health": 20,
+    "exp": 10,
+    "ac": 2
+  },
+  "Thief": {
+    "str": 10,
+    "dex": 10,
+    "con": 10,
+    "max_health": 20,
+    "exp": 20,
+    "ac": 10
+  }
+}
