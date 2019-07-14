@@ -13,8 +13,7 @@ Creature::~Creature()
 }
 
 int Creature :: Roll(int max_num) {
-	int result =  rand()% max_num + 1; 
-
+	int result = (1 + rand() % max_num);
 	return result;
 }
 
@@ -30,3 +29,4 @@ void Creature::SetMods() {
 	dex_mod = (dex - 10) / 2;
 	con_mod = (con - 10) / 2;
 }
+
