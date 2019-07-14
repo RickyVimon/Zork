@@ -5,7 +5,7 @@
 #include "Exit.h"
 
 
-Room::Room(const char* name, const char* description) :
+Room::Room(string name, string description) :
 	Entity(name, description, NULL)
 {
 	type = ROOM;

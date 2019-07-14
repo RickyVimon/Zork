@@ -2,7 +2,7 @@
 #include "Npc.h"
 
 
-Npc::Npc(const char* name, const char* description, Room* room):
+Npc::Npc(string name, string description, Room* room):
 	Creature(name, description, room)
 {
 }

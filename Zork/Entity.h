@@ -17,12 +17,12 @@ enum EntityType {
 class Entity
 {
 public:
-	Entity(const char* name, const char* description, Entity* parent);
+	Entity(string name, string description, Entity* parent);
 	virtual ~Entity();
 
 	EntityType type;
-	string name;
-	string description;
+    string name;
+    string description;
 
 	Entity* parent;
 	list<Entity*> container;

@@ -2,15 +2,17 @@
 #include "Entity.h"
 #include "Room.h"
 
+using namespace std;
+
 class Exit :
 	public Entity
 {
 public:
-	Exit(const char* name, const char* description, Room* origin, Room* to);
+	Exit(string direction_origin, string direction_destination, string name, string description, Room* origin, Room* destination);
 	~Exit();
 private:
-	Room* from;
-	Room* to;
+	Room* origin;
+	Room* destination;
 	enum direction {
 		NORTH,
 		SOUTH,
