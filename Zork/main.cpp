@@ -21,8 +21,6 @@ int main()
 
 		World my_world;
 
-		throw exception("error");
-
 		while (!game_completed) {
 			cout << "a currar";
 			break;

@@ -15,6 +15,10 @@ public:
 	Player(string name, string description, Room* room);
 	~Player();
 	void SetStats(string name, Hero_Class role);
+	void PrintStats();
+
+private:
+	string heroclass;
 };
 #endif
 

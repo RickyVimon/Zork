@@ -10,10 +10,16 @@
 #include <ctype.h>
 #include "Player.h"
 #include "Enemy.h"
+#include <fstream>
 
 
 World::World()
 {
+	//intro:----------------------------------------------------------------------------------------------------------------------------
+	std::ifstream f("title.txt");
+
+	if (f.is_open())
+		std::cout << f.rdbuf();
 	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
 
 	Room* entrance = new Room("Entrance", "\nThis is the training area, where your adventure starts, you can practice fighting against some dummies to get in shape for tha adventures you will face later on. You can see some fighting dummies and a closed door behind them. \n");

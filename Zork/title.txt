@@ -1,0 +1,24 @@
+
+Welcome to....
+____________ _____   ______           _    
+| ___ \ ___ \  __ \ |___  /          | |   
+| |_/ / |_/ / |  \/    / /  ___  _ __| | __
+|    /|  __/| | __    / /  / _ \| '__| |/ /
+| |\ \| |   | |_\ \ ./ /__| (_) | |  |   < 
+\_| \_\_|    \____/ \_____/\___/|_|  |_|\_\
+
+*Small version of Zork made by Ricard Vivo for TalantUPC Shool.
+
+In this game based on the original ZORK, you'll be an adventurer in the world of Zork.
+You will be able to move around the castle using the following commands:
+- Look:
+- Move + Direction:
+- Use:
+- Equip:
+- Drop:
+- Attack:
+- Open:
+- Stats:
+                                           
+                                           
+
