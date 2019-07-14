@@ -46,12 +46,13 @@ void Player::SetStats(string name, Hero_Class role)
 	cout << "Remember you can check your stats anytime with the command STATS.\n\n";
 }
 void Player::PrintStats() {
-	cout << "\n------------------------------------\n";
+	cout << "\n-----------------------------\n";
 	cout << name << " - " << "Level " << lvl << " - "<< heroclass << ":\n";
-	cout << "------------------------------------\n";
+	cout << "-----------------------------\n";
+
 	cout << "Health Points: " << health << "/" << max_health << "\n";
 	cout << "Armor: " << ac << "\n";
 	cout << "Strength: " << str << "\n";
 	cout << "Dexterity: " << dex << "\n";
 	cout << "Constitution: " << con << "\n\n";		
-}
+
