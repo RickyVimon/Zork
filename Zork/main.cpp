@@ -2,19 +2,22 @@
 //
 
 #include "pch.h"
-#include"World.h"
+#include "World.h"
 #include <iostream>
 #include <string>
 #include <vector>
+<<<<<<< Updated upstream
+=======
+#include <conio.h>
+#include "Universal.h"
+>>>>>>> Stashed changes
 
 using namespace std;
 
 int main()
 {
 	try {
-		char key;
-		string input_text;
-		vector<string> command;
+
 		bool game_completed = 0;
 
 		World my_world;
@@ -22,8 +25,9 @@ int main()
 		cout << "Welcome to this version of Zork! \n";
 		throw exception("error");
 
-		while (!game_completed) {
-			cout << "a currar";
+		while (!game_completed)
+		{
+			my_world.UserInput();
 			break;
 		}
 		return 0;
