@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "World.h"
+#include "Entity.h"
 #include "Room.h"
 #include "Exit.h"
 #include "Item.h"
-<<<<<<< Updated upstream
-=======
 #include <conio.h>
 #include <iostream>
 #include <string>
@@ -14,15 +13,10 @@
 #include <fstream>
 #include "Universal.h"
 #include<boost/tokenizer.hpp>
->>>>>>> Stashed changes
 
 
 World::World()
 {
-<<<<<<< Updated upstream
-
-	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
-=======
 	default_commands = { "look","move","attack","use","equip","unnequip","pick", "drop","stats","help" };
 	directions = { "north", "south", "east", "west" };
 	//intro:----------------------------------------------------------------------------------------------------------------------------
@@ -30,7 +24,6 @@ World::World()
 
 	if (f.is_open())
 		std::cout << f.rdbuf();
->>>>>>> Stashed changes
 
 	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
 	Room* entrance = new Room("Entrance", "\nThis is the training area, where your adventure starts, you can practice fighting against some dummies to get in shape for tha adventures you will face later on. You can see some fighting dummies and a closed door behind them. \n");
@@ -67,12 +60,9 @@ World::World()
 	entities.push_back(stairs);
 	entities.push_back(hall_door);
 
-<<<<<<< Updated upstream
-	//Creating all Items:--------------------------------------------------------------------------------------------------------------
-	
-=======
+
 	//Creating all Items:--------------------------------------------------------------------------------------------------------------	
->>>>>>> Stashed changes
+
 	Item* chest = new Item("Chest", "Captain's chest", barracks);
 	Item* hall_key = new Item("Key","It has the symbol of the royalty family on the bottom", chest);
 	Item* sword = new Item("Sword", "A one-handed sword", armory);
@@ -80,8 +70,6 @@ World::World()
 	Item* dane_axe = new Item("Axe", "A great Dane axe with a long wooden shaft of around 1,5 meters", armory);
 	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory);
 
-<<<<<<< Updated upstream
-=======
 	items.push_back(hall_key);
 	items.push_back(chest);
 	items.push_back(sword);
@@ -108,6 +96,7 @@ World::World()
 	entities.push_back(thief);
 
 	//Creating Player:---------------------------------------------------------------------------------------------------------------
+
 	bool char_created = 0;
 	char key;
 	string input_text;
@@ -116,7 +105,9 @@ World::World()
 
 	cout << "First of all, whats your name?\n";
 	cin >> name;
+
 	player = new Player(name, char_description , entrance);
+
 	cout << "Welcome " << name << "!. In this tutorial, you can choose to become one of the 3 fighters classes.\n";
 	cout << "\n- Berserker: These elite warriors can use the most powerful weapon of the game, the dane axes. This class if focused on attack and dealing lots of damage.\n";
 	cout << "\n- Slayer: They are masters of the sword and the shield, well balanced class which can deal good damage and algo good deffensive stats.\n";
@@ -164,7 +155,6 @@ World::World()
 		}
 	}
 
->>>>>>> Stashed changes
 }
 
 
@@ -269,3 +259,4 @@ void World::UserInput() {
 	}
 
 }
+

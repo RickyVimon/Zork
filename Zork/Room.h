@@ -9,7 +9,7 @@ class Room : public Entity
 {
 
 public:
-	Room(const char* name, const char* description);
+	Room(string name, string description);
 	~Room();
 
 };

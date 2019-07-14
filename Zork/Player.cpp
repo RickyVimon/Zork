@@ -1,8 +1,10 @@
+
 #include "pch.h"
 #include "Player.h"
+#include <iostream>
 
 
-Player::Player(const char* name, const char* description, Room* room) :
+Player::Player(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
 }
@@ -11,8 +13,6 @@ Player::Player(const char* name, const char* description, Room* room) :
 Player::~Player()
 {
 }
-<<<<<<< Updated upstream
-=======
 
 void Player::SetStats(string name, Hero_Class role)
 {
@@ -49,10 +49,10 @@ void Player::PrintStats() {
 	cout << "\n-----------------------------\n";
 	cout << name << " - " << "Level " << lvl << " - "<< heroclass << ":\n";
 	cout << "-----------------------------\n";
+
 	cout << "Health Points: " << health << "/" << max_health << "\n";
 	cout << "Armor: " << ac << "\n";
 	cout << "Strength: " << str << "\n";
 	cout << "Dexterity: " << dex << "\n";
 	cout << "Constitution: " << con << "\n\n";		
-}
->>>>>>> Stashed changes
+

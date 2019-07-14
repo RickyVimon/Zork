@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Creature.h"
 
-Creature::Creature(const char* name, const char* description, Room* room) :
+Creature::Creature(string name, string description, Room* room) :
 	Entity(name, description, (Entity*)room)
 {
 
@@ -11,11 +11,10 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 Creature::~Creature()
 {
 }
-<<<<<<< Updated upstream
-=======
 
 int Creature :: Roll(int max_num) {
 	int result =  rand()% max_num + 1; 
+
 	return result;
 }
 
@@ -31,5 +30,3 @@ void Creature::SetMods() {
 	dex_mod = (dex - 10) / 2;
 	con_mod = (con - 10) / 2;
 }
-
->>>>>>> Stashed changes

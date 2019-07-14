@@ -3,7 +3,7 @@
 #include "Room.h"
 
 
-Item::Item(const char* name, const char* description, Entity* parent):
+Item::Item(string name, string description, Entity* parent):
 	Entity(name, description, parent)
 {
 }

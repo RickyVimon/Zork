@@ -23,9 +23,6 @@ public:
 
 private:
 	vector<Entity*> entities;
-<<<<<<< Updated upstream
-
-=======
 	vector<string> default_commands;
 	vector<string> directions;
 	vector<string> command_vector;
@@ -33,6 +30,5 @@ private:
 	vector<Enemy*> enemies;
 	vector<Exit*> exits;
 	vector<Item*> items;
->>>>>>> Stashed changes
 };
 

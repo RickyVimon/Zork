@@ -42,15 +42,12 @@
     <ClInclude Include="Item.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
-=======
     <ClInclude Include="Enemy.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Universal.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -83,8 +80,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
-=======
     <ClCompile Include="Enemy.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -94,6 +89,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
->>>>>>> Stashed changes
   </ItemGroup>
 </Project>

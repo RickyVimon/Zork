@@ -1,10 +1,24 @@
-#pragma once
+#ifndef __Player__
+#define __Player__
+
 #include "Creature.h"
-class Player :
-	public Creature
+
+enum Hero_Class {
+	BERSERKER,
+	SLAYER,
+	LANCER
+};
+
+class Player : public Creature
 {
 public:
-	Player(const char* name, const char* description, Room* room);
+	Player(string name, string description, Room* room);
 	~Player();
+	void SetStats(string name, Hero_Class role);
+	void PrintStats();
+
+private:
+	string heroclass;
 };
+#endif
 
