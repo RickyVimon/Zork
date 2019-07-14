@@ -1,3 +1,6 @@
+#ifndef __Creature__
+#define __Creature__
+
 #include "Entity.h"
 #include "Room.h"
 #include "Item.h"
@@ -15,6 +18,7 @@ public:
 	virtual int Attack(Item* weapon, Creature* enemy);
 	virtual void SetStats(string name);
 	int Roll(int max_number);
+	void SetMods();
 
 protected:
 	int str;
@@ -29,4 +33,7 @@ protected:
 	int lvl;
 	int exp;
 };
+
+#endif //__Creature__
+
 

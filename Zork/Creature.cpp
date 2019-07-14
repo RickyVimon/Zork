@@ -24,3 +24,9 @@ int Creature::Attack(Item* weapon, Creature* enemy) {
 void Creature::SetStats(string name) {
 
 }
+void Creature::SetMods() {
+	str_mod = (str - 10) / 2;
+	dex_mod = (dex - 10) / 2;
+	con_mod = (con - 10) / 2;
+}
+

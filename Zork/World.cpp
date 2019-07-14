@@ -9,15 +9,11 @@
 #include <string>
 #include <ctype.h>
 #include "Player.h"
-//#include "Enemy.h"
-//#include "Creature.h"
+#include "Enemy.h"
 
 
 World::World()
 {
-
-	
-
 	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
 
 	Room* entrance = new Room("Entrance", "\nThis is the training area, where your adventure starts, you can practice fighting against some dummies to get in shape for tha adventures you will face later on. You can see some fighting dummies and a closed door behind them. \n");
@@ -46,6 +42,7 @@ World::World()
 	entities.push_back(stairs);
 	entities.push_back(hall_door);
 
+
 	//Creating all Items:--------------------------------------------------------------------------------------------------------------
 	
 	Item* chest = new Item("Chest", "Captain's chest", barracks);
@@ -55,9 +52,14 @@ World::World()
 	Item* dane_axe = new Item("Dane Axe", "A great axe with a long wooden shaft of around 1,5 meters", armory);
 	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory);
 
-	//Enemy* dummy = new Enemy("Dummy", "lalalala", entrance);
+	//Creating Enemies:--------------------------------------------------------------------------------------------------------------
+
+	Enemy* dummy = new Enemy("Dummy", "A wooden training target, you can try to attack it.\n", entrance);
+	Enemy* thief = new Enemy("Thief", "A thief if trying to scape from the authorities! Attack him before he attacks you!\n", hall);
+
 
 	//Creating Player:---------------------------------------------------------------------------------------------------------------
+	
 	bool char_created = 0;
 	char key;
 	string input_text;

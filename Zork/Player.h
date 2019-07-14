@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __Player__
+#define __Player__
+
 #include "Creature.h"
 
 enum Hero_Class {
@@ -14,4 +16,5 @@ public:
 	~Player();
 	void SetStats(string name, Hero_Class role);
 };
+#endif
 

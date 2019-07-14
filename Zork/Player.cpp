@@ -1,3 +1,4 @@
+
 #include "pch.h"
 #include "Player.h"
 
@@ -32,10 +33,7 @@ void Player::SetStats(string name, Hero_Class role)
 		break;
 	}
 	lvl = 1;
-	str_mod = (str - 10) / 2;
-	dex_mod = (dex - 10) / 2;
-	con_mod = (con - 10) / 2;
-
+	SetMods();
 	max_health = con * lvl;
 	health = max_health;
 	ac = 10;
