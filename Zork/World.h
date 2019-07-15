@@ -21,6 +21,7 @@ public:
 	string ParseCommand(string input, vector<string> options);
 	void Command(string input);
 	void UserInput();
+	void Move(string direction);
 
 private:
 	vector<Entity*> entities;

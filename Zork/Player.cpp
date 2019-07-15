@@ -11,6 +11,7 @@ Player::Player(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
 	actualroom = room;
+	type = PLAYER;
 }
 
 
@@ -90,18 +91,4 @@ bool Player::LeaveRoom(string direction, vector<Exit*> exits) {
 		}
 	}
 	return false;
-	/*
-	auto it = find_if(exits.begin(), exits.end(), [&roomname](const Exit& obj) {return obj. obj.GetOrigin()->name == roomname;});
-	if (it != exits.end())
-	{
-		// found element. it is an iterator to the first matching element.
-		// if you really need the index, you can also get it:
-		auto index = std::distance(exits.begin(), it);
-		// if (exittrobada.origin_direction == "direction"", player->actualRoom =  exittrobada.destinarionRoom)
-		//ChangeRoom();
-		return true;
-	}
-	else
-		return false;
-		*/
 }

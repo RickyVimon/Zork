@@ -11,7 +11,8 @@ enum EntityType {
 	EXIT,
 	ITEM,
 	CREATURE,
-	PLAYER
+	PLAYER,
+	ENEMY
 };
 
 class Entity

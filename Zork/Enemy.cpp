@@ -10,6 +10,7 @@ Enemy::Enemy(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
 	SetStats(name);
+	type = ENEMY;
 }
 
 

@@ -6,6 +6,7 @@
 Exit::Exit(string direction_origin, string direction_destination, string name, string description, Room* origin, Room* destination_room) :
 	Entity(name, description, (Entity*)origin)
 {
+	type = EXIT;
 	room_destination = destination_room;
 	room_origin = origin;
 	this->direction_origin = direction_origin;

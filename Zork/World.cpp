@@ -83,13 +83,13 @@ World::World()
 	items.push_back(dane_axe);
 	items.push_back(spear);
 
-	/*
+	
 	entities.push_back(chest);
 	entities.push_back(hall_key);
 	entities.push_back(sword);
 	entities.push_back(shield);
 	entities.push_back(dane_axe);
-	entities.push_back(spear);*/
+	entities.push_back(spear);
 
 	//Creating Enemies:--------------------------------------------------------------------------------------------------------------
 	Enemy* dummy = new Enemy("Dummy", "A wooden training target, you can try to attack it.\n", entrance);
@@ -203,7 +203,7 @@ void World::Command(string input) {
 
 	if (ParseCommand(input, default_commands) == "") {
 		cout << "Sorry I didn't understand you, what do you want to do?\n";
-		input_text = "";
+		input_text.clear();
 		UserInput();
 	}
 	else
@@ -214,18 +214,10 @@ void World::Command(string input) {
 	if (action == "look") {
 		player->GetRoom()->Look();
 		input_text = "";
+		//entities.
 	}
-	else if(action == "north") {
-		//mover pal norte		
-	}
-	else if (action == "south") {
-		
-	}
-	else if (action == "east") {
-
-	}
-	else if (action == "west") {
-
+	else if(action == "north" || action == "south" || action == "west" || action == "east") {
+		Move(action);
 	}
 	else if (action == "stats") {
 		player->PrintStats();
@@ -235,20 +227,25 @@ void World::Command(string input) {
 	}
 	else if (action == "move") {
 		direction = ParseCommand(input, directions);
-		if (direction != "") {
-			if (player->LeaveRoom(direction, exits)) {
-				cout << "You have moved to \n";
-				Command("look");
-			}
-			else
-				cout << "\n" << player->GetRoom()->name << " has no exit on the " << direction << ".\n";
-		}
-
+		Move(direction);
 	}
 	else if (input == "attack") {
 		//auto it = find_if(enemies.begin(), enemies.end(), [&myString](const Enemy& obj) {return obj.getName() == myString;})
 
 	}
+}
+
+void World::Move(string direction)
+{
+	if (direction != "") {
+		if (player->LeaveRoom(direction, exits)) {
+			cout << "You have moved to \n";
+			Command("look");
+		}
+		else
+			cout << "\n" << player->GetRoom()->name << " has no exit on the " << direction << ".\n";
+	}
+
 }
 
 
