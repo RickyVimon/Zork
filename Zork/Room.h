@@ -12,5 +12,9 @@ public:
 	Room(string name, string description);
 	~Room();
 	void Look();
+	string GetName();
+
+private:
+	string room_name;
 };
 

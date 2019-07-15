@@ -3,6 +3,7 @@
 
 #include "Creature.h"
 #include "Exit.h"
+#include "Universal.h"
 
 enum Hero_Class {
 	BERSERKER,
@@ -19,6 +20,8 @@ public:
 	void PrintStats();
 	void ChangeRoom(Exit* exit);
 	Room* GetRoom();
+	string GetRoomName();
+	bool LeaveRoom(string direction, vector<Exit*>);
 
 private:
 	string heroclass;

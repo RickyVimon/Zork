@@ -7,6 +7,7 @@
 Room::Room(string name, string description) :
 	Entity(name, description, NULL)
 {
+	room_name = name;
 	type = ROOM;
 }
 
@@ -20,5 +21,9 @@ void Room::Look() {
 	std::cout << name;
 	std::cout << "\n-----------------------\n";
 	std::cout << description << "\n";
+}
+
+string Room::GetName() {
+	return room_name;
 }
 

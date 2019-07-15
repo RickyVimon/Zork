@@ -54,12 +54,18 @@ World::World()
 	Exit* stairs = new Exit("North", "South", "Garden stairs", "", coutyard, garden);
 	Exit* hall_door = new Exit("North", "South", "Hall's Door", "", garden, hall);
 
+	exits.push_back(entrance_door);
+	exits.push_back(east_corridor);
+	exits.push_back(west_corrifor);
+	exits.push_back(stairs);
+	exits.push_back(hall_door);
+	/*
 	entities.push_back(entrance_door);
 	entities.push_back(east_corridor);
 	entities.push_back(west_corrifor);
 	entities.push_back(stairs);
 	entities.push_back(hall_door);
-
+	*/
 
 	//Creating all Items:--------------------------------------------------------------------------------------------------------------	
 
@@ -185,6 +191,7 @@ void World::UserInput() {
 		}
 		else { //return
 			Command(input_text);
+			input_text.clear();
 		}
 	}
 
@@ -229,19 +236,12 @@ void World::Command(string input) {
 	else if (action == "move") {
 		direction = ParseCommand(input, directions);
 		if (direction != "") {
-			if (direction == "north")
-			{
-
+			if (player->LeaveRoom(direction, exits)) {
+				cout << "You have moved to \n";
+				Command("look");
 			}
-			else if (direction == "south") {
-
-			}
-			else if (direction == "east") {
-
-			}
-			else if (direction == "west") {
-
-			}
+			else
+				cout << "\n" << player->GetRoom()->name << " has no exit on the " << direction << ".\n";
 		}
 
 	}
@@ -258,10 +258,9 @@ string World::ParseCommand(string input, vector<string> options)
 	boost::tokenizer<> tok(input);
 	for (boost::tokenizer<>::iterator command_word = tok.begin(); command_word != tok.end();++command_word) {
 		if (std::find(options.begin(), options.end(), Universal::ToLowerString(*command_word)) != options.end()) {
-			out = Universal::ToLowerString(*command_word);
+			out =  Universal::ToLowerString(*command_word);
 			return out;
 		}
 	}
 	return out;
-
 }
