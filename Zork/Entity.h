@@ -11,7 +11,8 @@ enum EntityType {
 	EXIT,
 	ITEM,
 	CREATURE,
-	PLAYER
+	PLAYER,
+	ENEMY
 };
 
 class Entity
@@ -21,8 +22,8 @@ public:
 	virtual ~Entity();
 
 	EntityType type;
-    string name;
-    string description;
+	string name;
+	string description;
 
 	Entity* parent;
 	list<Entity*> container;

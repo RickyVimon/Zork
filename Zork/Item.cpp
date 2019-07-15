@@ -6,6 +6,7 @@
 Item::Item(string name, string description, Entity* parent):
 	Entity(name, description, parent)
 {
+	type = ITEM;
 }
 
 

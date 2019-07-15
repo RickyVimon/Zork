@@ -10,6 +10,7 @@ Enemy::Enemy(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
 	SetStats(name);
+	type = ENEMY;
 }
 
 
@@ -34,7 +35,7 @@ void Enemy::SetStats(string name) {
 		SetMods();
 		health = max_health;
 	}
-	catch(exception){
+	catch (exception) {
 		//enemy not found
 	}
 }

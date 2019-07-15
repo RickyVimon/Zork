@@ -2,11 +2,16 @@
 #include "pch.h"
 #include "Player.h"
 #include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 
 Player::Player(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
+	actualroom = room;
+	type = PLAYER;
 }
 
 
@@ -46,12 +51,44 @@ void Player::SetStats(string name, Hero_Class role)
 	cout << "Remember you can check your stats anytime with the command STATS.\n\n";
 }
 void Player::PrintStats() {
-	cout << "\n------------------------------------\n";
-	cout << name << " - " << "Level " << lvl << " - "<< heroclass << ":\n";
-	cout << "------------------------------------\n";
+	cout << "\n-----------------------------\n";
+	cout << name << " - " << "Level " << lvl << " - " << heroclass << ":\n";
+	cout << "-----------------------------\n";
+
 	cout << "Health Points: " << health << "/" << max_health << "\n";
 	cout << "Armor: " << ac << "\n";
 	cout << "Strength: " << str << "\n";
 	cout << "Dexterity: " << dex << "\n";
-	cout << "Constitution: " << con << "\n\n";		
+	cout << "Constitution: " << con << "\n\n";
+
+}
+
+void Player::ChangeRoom(Exit* exit) {
+	if (!exit->IsLocked()) {
+		//Exit locked, you cant leave this room
+	}
+	actualroom = exit->NextRoom(GetRoom());
+
+}
+
+Room* Player::GetRoom() {
+	return actualroom;
+}
+
+string Player::GetRoomName() {
+	Room* r = GetRoom();
+	return r->name;
+}
+
+bool Player::LeaveRoom(string direction, vector<Exit*> exits) {
+	//find exits which have player->actualRoom as Origin room
+	for (int i = 0; i < exits.size(); i++)
+	{
+		if (Universal::ToLowerString(exits[i]->CheckRoom(GetRoomName())) == direction) {
+			//exit encontrada
+			ChangeRoom(exits[i]);
+			return true;
+		}
+	}
+	return false;
 }
