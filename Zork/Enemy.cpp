@@ -34,7 +34,7 @@ void Enemy::SetStats(string name) {
 		SetMods();
 		health = max_health;
 	}
-	catch(exception){
+	catch (exception) {
 		//enemy not found
 	}
 }

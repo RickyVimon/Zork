@@ -1,4 +1,3 @@
-#include <iostream>
 #include "pch.h"
 #include "Room.h"
 #include "Entity.h"
@@ -15,3 +14,11 @@ Room::Room(string name, string description) :
 Room::~Room()
 {
 }
+
+void Room::Look() {
+	std::cout << "\n-----------------------\n";
+	std::cout << name;
+	std::cout << "\n-----------------------\n";
+	std::cout << description << "\n";
+}
+
