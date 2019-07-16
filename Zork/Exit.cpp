@@ -3,14 +3,13 @@
 #include "Room.h"
 
 
-Exit::Exit(string direction_origin, string direction_destination, string name, string description, Room* origin, Room* destination_room) :
-	Entity(name, description, (Entity*)origin)
+Exit::Exit(string direction_origin, string direction_destination, string name, string description, Room* origin, Room* destination, bool bidirectional) :
+	Entity(name, description, (Entity*)origin),
+	closed(false), locked(false), key(NULL), bidirectional(bidirectional), direction_origin(direction_origin) ,direction_destination(direction_destination), room_destination(destination), room_origin(origin)
 {
 	type = EXIT;
-	room_destination = destination_room;
-	room_origin = origin;
-	this->direction_origin = direction_origin;
-	this->direction_destination = direction_destination;
+	if (bidirectional == false)
+		destination->container.push_back(this);
 }
 
 Exit::~Exit()
@@ -23,10 +22,6 @@ Room* Exit::GetOrigin() {
 
 string Exit::GetDirectionOrigin() {
 	return direction_origin;
-}
-
-bool Exit::IsLocked() {
-	return locked;
 }
 
 Room* Exit::GetDestination() {
@@ -53,3 +48,5 @@ string Exit::CheckRoom(string room) {
 	else
 		return "";
 }
+
+

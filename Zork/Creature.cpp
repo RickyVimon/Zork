@@ -30,3 +30,39 @@ void Creature::SetMods() {
 	dex_mod = (dex - 10) / 2;
 	con_mod = (con - 10) / 2;
 }
+
+void Creature::AutoEquip(Item* item) {
+	
+}
+void Creature::Drop(Item* item) {
+	inventory.remove(item);
+	item->parent = (Entity*)room;
+}
+void Creature::Take(Item* item) {
+	item->parent = (Entity*)this;
+	inventory.push_back(item);
+	cout << "\n" << item->name << "is now in your inventory.\n";
+}
+void Creature::Equip(Item* item) {
+
+}
+void Creature::Unequip(Item* item) {
+
+}
+
+vector<Item*> Creature::GetItems() {
+	vector<Item*> out;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
+		Item* ent = (Item*)*it;
+		if (ent->type = ITEM) {
+			out.push_back(ent);
+		}
+	}
+	return out;
+}
+
+void Creature::UpdateStats(string stats_name, int value) {
+	stats.find(stats_name)->second = stats.find(stats_name)->second + value;
+}
+

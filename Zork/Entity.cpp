@@ -14,3 +14,4 @@ Entity::Entity(string name, string description, Entity* parent = NULL) :
 Entity::~Entity()
 {
 }
+

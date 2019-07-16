@@ -24,23 +24,57 @@ void Room::Look() {
 	std::cout << name;
 	std::cout << "\n-----------------------\n";
 	std::cout << description << "\n";
+	if (container.size() > 0) {
+		bool firstitem = true;
+		bool firstenemy = true;
+		//cout << "You can see the following items:\n";
+		for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+		{
+			Entity* ent = *it;
+			switch (ent->type) {
+			case (ITEM):
+				if (firstitem) {
+					firstitem = false;
+					cout << "You can see the following items:\n";
+				}
+				cout << " - " << ent->name << ".\n";
+				break;
+			case (ENEMY):
+				if (firstenemy) {
+					firstenemy = false;
+					cout << "CAUTION! There is an enemy ";
+				}
+				cout << ent->name << ".\n";
+				break;
+			}
+			
+		}
+	}
 }
 
 string Room::GetName() {
 	return room_name;
 }
 
-vector<Item*> Room::GetItems(vector<Entity*> ent) {
-	vector<Entity*> items;
-	vector<Item*> out;
-	for (int i = 0; ent.size() < 0;i++) {
-		if (ent[i]->type = ITEM) {
-			items.push_back(ent[i]);
+vector<Exit*> Room::GetExits() {
+	vector<Exit*> out;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
+		Exit* ent = (Exit*)*it;
+		if (ent->type = EXIT) {
+			out.push_back(ent);
 		}
 	}
-	for (int j = 0; j < items.size(); j++) {
-		if (items[j]->parent->name == room_name) {
-			out.push_back((Item*)items[j]);
+	return out;
+}
+
+vector<Item*> Room::GetItems() {
+	vector<Item*> out;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
+		Item* ent = (Item*)*it;
+		if (ent->type = ITEM) {
+			out.push_back(ent);
 		}
 	}
 	return out;

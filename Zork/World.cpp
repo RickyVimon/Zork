@@ -17,7 +17,7 @@
 
 World::World()
 {
-	default_commands = { "look","move","attack","use","equip","unnequip","pick", "drop","stats","help", "north", "south", "east", "west" };
+	default_commands = { "look","move","attack","use","equip","unnequip", "take", "drop","stats","help", "north", "south", "east", "west" };
 	directions = { "north", "south", "east", "west" };
 	//intro:----------------------------------------------------------------------------------------------------------------------------
 	std::ifstream f("title.txt");
@@ -39,14 +39,6 @@ World::World()
 	rooms.push_back(barracks);
 	rooms.push_back(garden);
 	rooms.push_back(hall);
-	/*
-	entities.push_back(entrance);
-	entities.push_back(coutyard);
-	entities.push_back(armory);
-	entities.push_back(barracks);
-	entities.push_back(garden);
-	entities.push_back(hall);
-	*/
 
 	Exit* entrance_door = new Exit("North", "South", "Entrance door", "", entrance, coutyard);
 	Exit* east_corridor = new Exit("East", "West", "Armory corridor", "", coutyard, armory);
@@ -54,52 +46,40 @@ World::World()
 	Exit* stairs = new Exit("North", "South", "Garden stairs", "", coutyard, garden);
 	Exit* hall_door = new Exit("North", "South", "Hall's Door", "", garden, hall);
 
-	exits.push_back(entrance_door);
-	exits.push_back(east_corridor);
-	exits.push_back(west_corrifor);
-	exits.push_back(stairs);
-	exits.push_back(hall_door);
-	/*
+	stairs->locked = true;
+
 	entities.push_back(entrance_door);
 	entities.push_back(east_corridor);
 	entities.push_back(west_corrifor);
 	entities.push_back(stairs);
 	entities.push_back(hall_door);
-	*/
+	
+
+
+	//Creating Enemies:--------------------------------------------------------------------------------------------------------------
+	Enemy* dummy = new Enemy("Dummy", "A wooden training target, you can try to attack it.\n", entrance);
+	Enemy* thief = new Enemy("Thief", "A thief if trying to scape from the authorities! Attack him before he attacks you!\n", hall);
+
+	entities.push_back(dummy);
+	entities.push_back(thief);
 
 	//Creating all Items:--------------------------------------------------------------------------------------------------------------	
 
-	Item* chest = new Item("Chest", "Captain's chest", barracks);
-	Item* hall_key = new Item("Key", "It has the symbol of the royalty family on the bottom", chest);
-	Item* sword = new Item("Sword", "A one-handed sword", armory);
-	Item* shield = new Item("Shield", "A wooden rounded shape shield", armory);
-	Item* dane_axe = new Item("Axe", "A great Dane axe with a long wooden shaft of around 1,5 meters", armory);
-	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory);
+	Item* chest = new Item("Chest", "Captain's chest", barracks, 0, COMMON);
+	Item* hall_key = new Item("Key", "It has the symbol of the royalty family on the bottom", chest, 0, COMMON);
+	Item* sword = new Item("Sword", "A one-handed sword", armory, WEAPON);
+	Item* shield = new Item("Shield", "A wooden rounded shape shield", armory, 2, WEAPON);
+	Item* dane_axe = new Item("Axe", "A great Dane axe with a long wooden shaft of around 1,5 meters", armory, WEAPON);
+	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory, WEAPON);
+	Item* dagger = new Item("Dagger", "A lethal dagger if it's used by the right hands.", thief, WEAPON);
+	Item* chainshirt = new Item("Chainshirt", "An smaller version of a chainmail. It offers a decent amount of protection.", entrance, ARMOR);
 
-	items.push_back(hall_key);
-	items.push_back(chest);
-	items.push_back(sword);
-	items.push_back(shield);
-	items.push_back(dane_axe);
-	items.push_back(spear);
-
-	
 	entities.push_back(chest);
 	entities.push_back(hall_key);
 	entities.push_back(sword);
 	entities.push_back(shield);
 	entities.push_back(dane_axe);
 	entities.push_back(spear);
-
-	//Creating Enemies:--------------------------------------------------------------------------------------------------------------
-	Enemy* dummy = new Enemy("Dummy", "A wooden training target, you can try to attack it.\n", entrance);
-	Enemy* thief = new Enemy("Thief", "A thief if trying to scape from the authorities! Attack him before he attacks you!\n", hall);
-
-	enemies.push_back(dummy);
-	enemies.push_back(thief);
-
-	entities.push_back(dummy);
-	entities.push_back(thief);
 
 	//Creating Player:---------------------------------------------------------------------------------------------------------------
 
@@ -113,6 +93,7 @@ World::World()
 	cin >> name;
 
 	player = new Player(name, char_description, entrance);
+	entrance->container.remove(player);
 
 	cout << "Welcome " << name << "!. In this tutorial, you can choose to become one of the 3 fighters classes.\n";
 	cout << "\n- Berserker: These elite warriors can use the most powerful weapon of the game, the dane axes. This class if focused on attack and dealing lots of damage.\n";
@@ -143,14 +124,17 @@ World::World()
 		{
 			if (Universal::ToLowerString(input_text) == "berserker") {
 				player->SetStats(name, BERSERKER);
+				Command("look");
 				char_created = true;
 			}
 			else if (Universal::ToLowerString(input_text) == "slayer") {
 				player->SetStats(name, SLAYER);
+				Command("look");
 				char_created = true;
 			}
 			else if (Universal::ToLowerString(input_text) == "lancer") {
 				player->SetStats(name, LANCER);
+				Command("look");
 				char_created = true;
 			}
 			else {
@@ -212,9 +196,23 @@ void World::Command(string input) {
 	//Actions which can be understood with one argument:------------------------------------------------
 
 	if (action == "look") {
-		player->GetRoom()->Look();
-		input_text = "";
-		//entities.
+		//check if it is a Look or a Look + args
+		if (input != "look") {	
+			vector<string> item_names;
+			vector<Item*> items = player->GetRoom()->GetItems();
+			for (size_t i = 0; i < items.size(); i++) {
+				item_names.push_back(items[i]->name);
+			}
+			string itemname = ParseCommand(input, item_names);
+			for (size_t j = 0; j < items.size(); j++) {
+				if(Universal::ToLowerString(items[j]->name) == itemname)
+					cout << "\nYou take a closer look to the " << items[j]->name << ". " << items[j]->description << ".\n";
+			}			
+		}
+		else {
+			player->GetRoom()->Look();
+			input_text = "";
+		}
 	}
 	else if(action == "north" || action == "south" || action == "west" || action == "east") {
 		Move(action);
@@ -224,6 +222,46 @@ void World::Command(string input) {
 	}
 	else if (action == "help") {
 
+	}
+	else if (action == "take") {
+		//check if it is a Look or a Look + args
+		if (input != "take") {
+			vector<string> item_names;
+			vector<Item*> items = player->GetRoom()->GetItems();
+			for (size_t i = 0; i < items.size(); i++) {
+				item_names.push_back(items[i]->name);
+			}
+			string itemname = ParseCommand(input, item_names);
+			for (size_t j = 0; j < items.size(); j++) {
+				if (Universal::ToLowerString(items[j]->name) == itemname)
+					player->Take(items[j]);
+
+			}
+		}
+		else {
+			cout << "\nYou forgot to write what do you want to take.\n";
+			input_text = "";
+		}
+	}
+	else if (action == "drop") {
+		//check if it is a Look or a Look + args
+		if (input != "drop") {
+			vector<string> item_names;
+			vector<Item*> items = player->GetItems();
+			for (size_t i = 0; i < items.size(); i++) {
+				item_names.push_back(items[i]->name);
+			}
+			string itemname = ParseCommand(input, item_names);
+			for (size_t j = 0; j < items.size(); j++) {
+				if (Universal::ToLowerString(items[j]->name) == itemname)
+					player->Drop(items[j]);
+
+			}
+		}
+		else {
+			cout << "\nYou forgot to write what do you want to Drop.\n";
+			input_text = "";
+		}
 	}
 	else if (action == "move") {
 		direction = ParseCommand(input, directions);
@@ -237,15 +275,8 @@ void World::Command(string input) {
 
 void World::Move(string direction)
 {
-	if (direction != "") {
-		if (player->LeaveRoom(direction, exits)) {
-			cout << "You have moved to \n";
-			Command("look");
-		}
-		else
-			cout << "\n" << player->GetRoom()->name << " has no exit on the " << direction << ".\n";
-	}
-
+	if (direction != "")
+		player->LeaveRoom(direction);
 }
 
 
@@ -253,8 +284,12 @@ string World::ParseCommand(string input, vector<string> options)
 {
 	string out = "";
 	boost::tokenizer<> tok(input);
+	vector<string> minus;
+	for (size_t j = 0; j < options.size(); j++) {
+		minus.push_back(Universal::ToLowerString(options[j]));
+	}
 	for (boost::tokenizer<>::iterator command_word = tok.begin(); command_word != tok.end();++command_word) {
-		if (std::find(options.begin(), options.end(), Universal::ToLowerString(*command_word)) != options.end()) {
+		if (std::find(minus.begin(), minus.end(), Universal::ToLowerString(*command_word)) != minus.end()) {
 			out =  Universal::ToLowerString(*command_word);
 			return out;
 		}

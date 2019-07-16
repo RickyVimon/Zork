@@ -21,7 +21,7 @@ public:
 	void ChangeRoom(Exit* exit);
 	Room* GetRoom();
 	string GetRoomName();
-	bool LeaveRoom(string direction, vector<Exit*>);
+	bool LeaveRoom(string direction);
 
 private:
 	string heroclass;

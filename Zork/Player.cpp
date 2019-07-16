@@ -46,6 +46,16 @@ void Player::SetStats(string name, Hero_Class role)
 	max_health = con * lvl;
 	health = max_health;
 	ac = 10;
+	stats.emplace("Armor", &str);
+	stats.emplace("Dexterity", &dex);
+	stats.emplace("Constitution", &con);
+	stats.emplace("Armor", &ac);
+	stats.emplace("Health", &health);
+	stats.emplace("MaxHealth", &max_health);
+	stats.emplace("Level", &lvl);
+	stats.emplace("Experience", &exp);
+
+
 	cout << "\n" << heroclass << " created succesfuly. You can take a look at your Stats.\n";
 	PrintStats();
 	cout << "Remember you can check your stats anytime with the command STATS.\n\n";
@@ -64,8 +74,8 @@ void Player::PrintStats() {
 }
 
 void Player::ChangeRoom(Exit* exit) {
-	if (!exit->IsLocked()) {
-		//Exit locked, you cant leave this room
+	if (!exit->locked) {
+	cout << "Exit locked, you need to find the way to unlock it. \n";
 	}
 	actualroom = exit->NextRoom(GetRoom());
 
@@ -80,15 +90,21 @@ string Player::GetRoomName() {
 	return r->name;
 }
 
-bool Player::LeaveRoom(string direction, vector<Exit*> exits) {
+bool Player::LeaveRoom(string direction) {
 	//find exits which have player->actualRoom as Origin room
-	for (int i = 0; i < exits.size(); i++)
+	vector<Exit*> exits = actualroom->GetExits();
+	for (size_t i = 0; i < exits.size(); i++)
 	{
 		if (Universal::ToLowerString(exits[i]->CheckRoom(GetRoomName())) == direction) {
 			//exit encontrada
+			if (!exits[i]->locked) {
+				cout << "\n The " << exits[i]->name << " is locked, you should find the way to unlock it.\n";
+				return false;
+			}				
 			ChangeRoom(exits[i]);
 			return true;
 		}
+		cout << "\n" << GetRoom()->name << " has no exit on the " << direction << ".\n";
 	}
 	return false;
 }
