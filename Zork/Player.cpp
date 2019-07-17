@@ -10,7 +10,6 @@
 Player::Player(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
-	actualroom = room;
 	type = PLAYER;
 }
 
@@ -46,14 +45,14 @@ void Player::SetStats(string name, Hero_Class role)
 	max_health = con * lvl;
 	health = max_health;
 	ac = 10;
-	stats.emplace("Armor", &str);
-	stats.emplace("Dexterity", &dex);
-	stats.emplace("Constitution", &con);
-	stats.emplace("Armor", &ac);
-	stats.emplace("Health", &health);
-	stats.emplace("MaxHealth", &max_health);
-	stats.emplace("Level", &lvl);
-	stats.emplace("Experience", &exp);
+	stats.emplace("Armor", str);
+	stats.emplace("Dexterity", dex);
+	stats.emplace("Constitution", con);
+	stats.emplace("Armor", ac);
+	stats.emplace("Health", health);
+	stats.emplace("MaxHealth", max_health);
+	stats.emplace("Level", lvl);
+	stats.emplace("Experience", exp);
 
 
 	cout << "\n" << heroclass << " created succesfuly. You can take a look at your Stats.\n";

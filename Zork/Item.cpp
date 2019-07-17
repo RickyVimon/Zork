@@ -38,11 +38,22 @@ vector<Item*> Item::GetItems() {
 	return out;
 }
 
-void Item::ChangeStat(string stat_name, int value) {
-	string st = stat_name;
+void Item::ChangeStat(int value) {
 	int val = value;
 	Creature* crt = (Creature*)parent;
-	crt->UpdateStats(st, val);
+	switch (this->item_type) {
+	case(ARMOR):
+		crt->UpdateArmor(val);
+		break;
+	}
+}
+
+void Item::EquipItem() {
+	ChangeStat(value_mod);
+}
+
+void Item::Unnequip() {
+	ChangeStat ((-1) * value_mod);
 }
 
 

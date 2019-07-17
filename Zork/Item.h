@@ -14,9 +14,12 @@ class Item :
 	public Entity
 {
 public:
-	Item(string name, string description, Entity* parent, int value, ItemType item_type = COMMON);
+	Item(string name, string description, Entity* parent, int value, ItemType item_type);
 	~Item();
-	void ChangeStat(string stat_name, int value);
+	void ChangeStat(int value);
+	void EquipItem();
+
+	void Unnequip();
 
 private:
 	vector<Item*> GetItems();

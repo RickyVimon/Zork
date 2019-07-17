@@ -4,6 +4,7 @@
 #include "Exit.h"
 #include <string>
 #include "Item.h"
+#include "Universal.h"
 
 
 
@@ -46,6 +47,8 @@ void Room::Look() {
 				}
 				cout << ent->name << ".\n";
 				break;
+			default:
+				break;
 			}
 			
 		}
@@ -72,9 +75,31 @@ vector<Item*> Room::GetItems() {
 	vector<Item*> out;
 	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
 	{
+		Entity* ent = *it;
+		if (ent->type == ITEM) {
+			out.push_back((Item*)ent);
+		}
+	}
+	return out;
+}
+
+vector<string> Room::GetItemsNames() {
+	vector<string> out;
+	vector<Item*> items = GetItems();
+	for (size_t i = 0; i < items.size(); i++) {
+		out.push_back(items[i]->name);
+	}
+	return out;
+}
+
+Item* Room::GetItems(string name) {
+	Item* out = NULL;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
 		Item* ent = (Item*)*it;
-		if (ent->type = ITEM) {
-			out.push_back(ent);
+		if (ent->type == ITEM && Universal::ToLowerString(ent->name) == name) {
+			out = ent;
+			return out;
 		}
 	}
 	return out;

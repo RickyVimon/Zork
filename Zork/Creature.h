@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <list>
 
 
 using namespace std;
@@ -25,16 +26,19 @@ public:
 	void AutoEquip(Item* item);
 	void Drop(Item* item);
 	void Take(Item* item);
-	void Equip(Item* item);
+	void Equip(string itemname);
 	void Unequip(Item* item);
-	void UpdateStats(string stats_name, int value);
+	void UpdateArmor(int value);
 	vector<Item*> GetItems();
+	Item * GetItems(string name);
+	vector<string> GetItemsNames();
+	bool IsEquipped(string itemname);
 
 protected:
-	Room* room;
-	list<Item*> inventory;
+	Room* actualroom;
+	//list<Item*> equiped;
+	map<string, int> stats;
 	list<Item*> equiped;
-	map<string, int*> stats;
 	int str;
 	int str_mod;
 	int dex;
@@ -49,6 +53,5 @@ protected:
 };
 
 #endif //__Creature__
-
 
 

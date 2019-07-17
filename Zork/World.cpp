@@ -67,12 +67,12 @@ World::World()
 
 	Item* chest = new Item("Chest", "Captain's chest", barracks, 0, COMMON);
 	Item* hall_key = new Item("Key", "It has the symbol of the royalty family on the bottom", chest, 0, COMMON);
-	Item* sword = new Item("Sword", "A one-handed sword", armory, WEAPON);
-	Item* shield = new Item("Shield", "A wooden rounded shape shield", armory, 2, WEAPON);
-	Item* dane_axe = new Item("Axe", "A great Dane axe with a long wooden shaft of around 1,5 meters", armory, WEAPON);
-	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory, WEAPON);
-	Item* dagger = new Item("Dagger", "A lethal dagger if it's used by the right hands.", thief, WEAPON);
-	Item* chainshirt = new Item("Chainshirt", "An smaller version of a chainmail. It offers a decent amount of protection.", entrance, ARMOR);
+	Item* sword = new Item("Sword", "A one-handed sword", armory, 10, WEAPON);
+	Item* shield = new Item("Shield", "A wooden rounded shape shield", armory, 2, ARMOR);
+	Item* dane_axe = new Item("Axe", "A great Dane axe with a long wooden shaft of around 1,5 meters", armory, 12, WEAPON);
+	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory, 10, WEAPON);
+	Item* dagger = new Item("Dagger", "A lethal dagger if it's used by the right hands.", thief, 6, WEAPON);
+	Item* chainshirt = new Item("Chainshirt", "An smaller version of a chainmail. It offers a decent amount of protection.", entrance, 2, ARMOR);
 
 	entities.push_back(chest);
 	entities.push_back(hall_key);
@@ -125,21 +125,21 @@ World::World()
 			if (Universal::ToLowerString(input_text) == "berserker") {
 				player->SetStats(name, BERSERKER);
 				Command("look");
-				char_created = true;
+char_created = true;
 			}
 			else if (Universal::ToLowerString(input_text) == "slayer") {
-				player->SetStats(name, SLAYER);
-				Command("look");
-				char_created = true;
+			player->SetStats(name, SLAYER);
+			Command("look");
+			char_created = true;
 			}
 			else if (Universal::ToLowerString(input_text) == "lancer") {
-				player->SetStats(name, LANCER);
-				Command("look");
-				char_created = true;
+			player->SetStats(name, LANCER);
+			Command("look");
+			char_created = true;
 			}
 			else {
-				cout << "Sorry, I dont understand you. Do you want to become a BERSERKER, a SLAYER or a LANCER?\n";
-				input_text = "";
+			cout << "Sorry, I dont understand you. Do you want to become a BERSERKER, a SLAYER or a LANCER?\n";
+			input_text = "";
 			}
 		}
 	}
@@ -186,7 +186,7 @@ void World::Command(string input) {
 	string action;
 
 	if (ParseCommand(input, default_commands) == "") {
-		cout << "Sorry I didn't understand you, what do you want to do?\n";
+		cout << "\nSorry I didn't understand you, what do you want to do?\n";
 		input_text.clear();
 		UserInput();
 	}
@@ -197,24 +197,20 @@ void World::Command(string input) {
 
 	if (action == "look") {
 		//check if it is a Look or a Look + args
-		if (input != "look") {	
-			vector<string> item_names;
-			vector<Item*> items = player->GetRoom()->GetItems();
-			for (size_t i = 0; i < items.size(); i++) {
-				item_names.push_back(items[i]->name);
-			}
+		if (input != "look") {
+			vector<string> item_names = player->GetRoom()->GetItemsNames();
 			string itemname = ParseCommand(input, item_names);
 			for (size_t j = 0; j < items.size(); j++) {
-				if(Universal::ToLowerString(items[j]->name) == itemname)
+				if (Universal::ToLowerString(items[j]->name) == itemname)
 					cout << "\nYou take a closer look to the " << items[j]->name << ". " << items[j]->description << ".\n";
-			}			
+			}
 		}
 		else {
 			player->GetRoom()->Look();
 			input_text = "";
 		}
 	}
-	else if(action == "north" || action == "south" || action == "west" || action == "east") {
+	else if (action == "north" || action == "south" || action == "west" || action == "east") {
 		Move(action);
 	}
 	else if (action == "stats") {
@@ -226,48 +222,65 @@ void World::Command(string input) {
 	else if (action == "take") {
 		//check if it is a Look or a Look + args
 		if (input != "take") {
-			vector<string> item_names;
-			vector<Item*> items = player->GetRoom()->GetItems();
-			for (size_t i = 0; i < items.size(); i++) {
-				item_names.push_back(items[i]->name);
-			}
+			vector<string> item_names = player->GetRoom()->GetItemsNames();
 			string itemname = ParseCommand(input, item_names);
-			for (size_t j = 0; j < items.size(); j++) {
-				if (Universal::ToLowerString(items[j]->name) == itemname)
-					player->Take(items[j]);
-
+			if (itemname != "") {
+				Item* item = player->GetRoom()->GetItems(itemname);
+				if (item != NULL) {
+					if (item->type == ITEM) {
+						player->Take(item);
+						player->GetRoom()->container.erase(std::remove(player->GetRoom()->container.begin(), player->GetRoom()->container.end(), (Entity*)item), player->GetRoom()->container.end());
+						return;
+					}
+					else
+						cout << "\nYou cannot take that!.\n";
+				}
+				else {
+					cout << "\nYou forgot to write what do you want to take.\n";
+					input_text = "";
+				}
 			}
-		}
-		else {
-			cout << "\nYou forgot to write what do you want to take.\n";
-			input_text = "";
+			else
+				cout << "\nThere is no " << input << " you can take.\n";
 		}
 	}
 	else if (action == "drop") {
 		//check if it is a Look or a Look + args
 		if (input != "drop") {
-			vector<string> item_names;
-			vector<Item*> items = player->GetItems();
-			for (size_t i = 0; i < items.size(); i++) {
-				item_names.push_back(items[i]->name);
-			}
+			vector<string> item_names = player->GetItemsNames();
 			string itemname = ParseCommand(input, item_names);
-			for (size_t j = 0; j < items.size(); j++) {
-				if (Universal::ToLowerString(items[j]->name) == itemname)
-					player->Drop(items[j]);
-
-			}
+			Item* item = player->GetItems(itemname);
+			if (item != NULL)
+				player->Drop(item);
+			else
+				cout << "\nYou can't drop an item which you don't have.\n";
 		}
 		else {
 			cout << "\nYou forgot to write what do you want to Drop.\n";
 			input_text = "";
 		}
 	}
+	else if (action == "equip") {
+		if (input != "equip") {
+			vector<string> item_names = player->GetItemsNames();
+			string itemname = ParseCommand(input, item_names);
+			if (itemname != "") {
+				player->Equip(itemname);
+				cout << "\n" << player->GetItems(itemname)->name << " equiped.\n";
+			}
+			else
+			{
+				cout << "I don't really know what is that, it's looks like you want to equip something but you haven't used the right command.\n";
+			}
+		}else 
+			cout << "\nYou forgot to write what do you want to Equip.\n";
+
+	}
 	else if (action == "move") {
 		direction = ParseCommand(input, directions);
 		Move(direction);
 	}
-	else if (input == "attack") {
+	else if (action == "attack") {
 		//auto it = find_if(enemies.begin(), enemies.end(), [&myString](const Enemy& obj) {return obj.getName() == myString;})
 
 	}

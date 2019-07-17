@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include "Entity.h"
+#include <string>
 
 class Item;
 class Exit;
@@ -18,6 +19,8 @@ public:
 	void Look();
 	string GetName();
 	vector<Item*> GetItems();
+	vector<string> GetItemsNames();
+	Item * GetItems(string name);
 	vector<Exit*> GetExits();
 
 private:

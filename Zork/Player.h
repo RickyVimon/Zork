@@ -25,6 +25,6 @@ public:
 
 private:
 	string heroclass;
-	Room* actualroom;
+	//Room* actualroom;
 };
 #endif
