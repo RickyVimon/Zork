@@ -20,7 +20,7 @@ World::World()
 	game_completed = false;
 	game_over = false;
 
-	default_commands = { "look","move","attack","inventory","equip","unequip", "take", "drop","stats","help", "north", "south", "east", "west" };
+	default_commands = { "look","move","attack","inventory","equip","unequip", "quit", "take", "drop","stats","help", "north", "south", "east", "west" };
 	directions = { "north", "south", "east", "west" };
 	//intro:----------------------------------------------------------------------------------------------------------------------------
 	std::ifstream f("title.txt");
@@ -172,11 +172,25 @@ void World::UserInput() {
 			cout << key;
 		}
 		else { //return
-			Command(input_text);
+			if (isASCII(input_text))
+				Command(input_text);
+			else
+				cout << "\nSpecial characters are not valid.\n";
 			input_text.clear();
 		}
 	}
 
+}
+
+bool isASCII(string s)
+{	vector<char> chars;
+	copy(s.begin(), s.end(), back_inserter(chars));
+	for (size_t i = 0; i < chars.size(); i++) {
+		if (chars[i] < 0 || (chars[i] >= 128)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 void World::Command(string input) {
@@ -351,6 +365,10 @@ void World::Command(string input) {
 
 	else if (action == "attack") {		
 		game_completed = player->Attack();
+	}
+	else if (action == "quit") {
+	cout << "::::::::::::::::::::::::::::::::Hope to see you back in Zork soon::::::::::::::::::::::::::::::::::::::::::::\n\n";
+		game_completed = true;
 	}
 }
 

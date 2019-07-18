@@ -36,3 +36,5 @@ private:
 	vector<Item*> items;
 	string input_text;
 };
+
+bool isASCII(string s);

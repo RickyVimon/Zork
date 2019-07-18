@@ -13,10 +13,8 @@ using namespace std;
 
 int main()
 {
+	World my_world;
 	try {
-
-		World my_world;
-
 		while (!my_world.game_completed)
 		{
 			my_world.UserInput();
@@ -24,14 +22,12 @@ int main()
 		}
 		return 0;
 	}
-	catch (exception const & e) {
+	catch (const std::exception& ex) {
 		cout << "error exception";
-		main();
+		my_world.UserInput();
 		return 0;
 	}
 
 }
-void CharacterCreation() {
 
-}
 
