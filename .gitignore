@@ -27,7 +27,6 @@ TestResult.xml
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
-dlldata.c
 
 # DNX
 project.lock.json
@@ -38,9 +37,6 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
-*.obj
-*.pch
-*.pdb
 *.pgc
 *.pgd
 *.rsp
