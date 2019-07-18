@@ -29,3 +29,5 @@ These are the command you can use. Try to find the thief and kill it!
 	attacks is high.
 
 - Help: Prints the lists of commands.
+
+- Quit: Quits the game.

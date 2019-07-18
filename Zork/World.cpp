@@ -29,9 +29,9 @@ World::World()
 		std::cout << f.rdbuf();
 
 	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
-	Room* entrance = new Room("Entrance", "\nThis is the training area, where your adventure starts, you can practice fighting against some dummies to get in shape for tha adventures you will face later on. You can see some fighting dummies and a closed door behind them. \n");
-	Room* coutyard = new Room("Coutyard", "\nYou are in the coutyard of the castle, in the central part of it you can see a some dead bodies with the colours of the guards around. There is a big door in the north direction, at the end of the stairs, there is also two other small doors, at each other sides of the courtyard. \n");
-	Room* armory = new Room("Armory", "\nYou are in the armory of the castle, there are some weapons around like a sword, a round shield, a dane axe, and a spear.\n");
+	Room* entrance = new Room("Entrance", "\nTThis is the entrance of the castle, get ready and be sure to equip all the protection you need! You can check the stats with and wihout the armor equip with the command Stat. \n");
+	Room* coutyard = new Room("Coutyard", "\nYou are in the coutyard of the castle, in the central part of it you can see a taining dummy. Try to attack it once you get a weapon! There is a big door in the north direction, at the end of the stairs, there is also two other small doors, at each other sides of the courtyard. \n");
+	Room* armory = new Room("Armory", "\nYou are in the armory of the castle, it could be some weapons around here.\n");
 	Room* barracks = new Room("Barracks", "\nThis is the barracks of the castle, where all the soldiers sleep, there is no one here but you can see a chest.\n");
 	Room* garden = new Room("Garden", "\nThe gardens of the royality have been the jewel of the crown, with flowers from all the colours of the rainbow. There is a wanter fountain in the middle of the garden and a huge door on the north.\n");
 	Room* hall = new Room("Hall", "\nThis is the hall of the castle, you can see the King's Throne shinig at the end of the saloon.\n");
@@ -367,7 +367,7 @@ void World::Command(string input) {
 		game_completed = player->Attack();
 	}
 	else if (action == "quit") {
-	cout << "::::::::::::::::::::::::::::::::Hope to see you back in Zork soon::::::::::::::::::::::::::::::::::::::::::::\n\n";
+	cout << "\n::::::::::::::::::::::::::::::::Hope to see you back in Zork soon::::::::::::::::::::::::::::::::::::::::::::\n\n";
 		game_completed = true;
 	}
 }
