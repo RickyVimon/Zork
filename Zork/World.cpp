@@ -29,7 +29,7 @@ World::World()
 		std::cout << f.rdbuf();
 
 	//Creating all the rooms in the map:------------------------------------------------------------------------------------------------
-	Room* entrance = new Room("Entrance", "\nTThis is the entrance of the castle, get ready and be sure to equip all the protection you need! You can check the stats with and wihout the armor equip with the command Stat. \n");
+	Room* entrance = new Room("Entrance", "\nThis is the entrance of the castle, get ready and be sure to equip all the protection you need! You can check the stats with and wihout the armor equip with the command Stat. \n");
 	Room* coutyard = new Room("Coutyard", "\nYou are in the coutyard of the castle, in the central part of it you can see a taining dummy. Try to attack it once you get a weapon! There is a big door in the north direction, at the end of the stairs, there is also two other small doors, at each other sides of the courtyard. \n");
 	Room* armory = new Room("Armory", "\nYou are in the armory of the castle, it could be some weapons around here.\n");
 	Room* barracks = new Room("Barracks", "\nThis is the barracks of the castle, where all the soldiers sleep, there is no one here but you can see a chest.\n");
