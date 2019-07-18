@@ -1,16 +1,5 @@
+These are the command you can use. Try to find the thief and kill it!
 
-Welcome to....
-____________ _____   ______           _    
-| ___ \ ___ \  __ \ |___  /          | |   
-| |_/ / |_/ / |  \/    / /  ___  _ __| | __
-|    /|  __/| | __    / /  / _ \| '__| |/ /
-| |\ \| |   | |_\ \ ./ /__| (_) | |  |   < 
-\_| \_\_|    \____/ \_____/\___/|_|  |_|\_\
-
-*Small version of Zork made by Ricard Vivo for TalantUPC Shool.
-
-In this game based on the original ZORK, you'll be an adventurer in the world of Zork.
-You will be able to move around the castle using the following commands:
 - Look: This command will show you more information about the room you are in.
 	You can use Look + name to look at something concrete. Example: Look chest.
 
@@ -40,6 +29,3 @@ You will be able to move around the castle using the following commands:
 	attacks is high.
 
 - Help: Prints the lists of commands.
-                                           
-                                           
-

@@ -18,6 +18,7 @@ public:
 	~Player();
 	void SetStats(string name, Hero_Class role);
 	void PrintStats();
+	void PrintInventory();
 	void ChangeRoom(Exit* exit);
 	Room* GetRoom();
 	string GetRoomName();

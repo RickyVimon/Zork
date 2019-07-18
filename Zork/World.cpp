@@ -20,7 +20,7 @@ World::World()
 	game_completed = false;
 	game_over = false;
 
-	default_commands = { "look","move","attack","use","equip","unequip", "take", "drop","stats","help", "north", "south", "east", "west" };
+	default_commands = { "look","move","attack","inventory","equip","unequip", "take", "drop","stats","help", "north", "south", "east", "west" };
 	directions = { "north", "south", "east", "west" };
 	//intro:----------------------------------------------------------------------------------------------------------------------------
 	std::ifstream f("title.txt");
@@ -237,8 +237,14 @@ void World::Command(string input) {
 	else if (action == "stats") {
 		player->PrintStats();
 	}
+	else if (action == "inventory") {
+		player->PrintInventory();
+	}
 	else if (action == "help") {
+		std::ifstream help("help.txt");
 
+		if (help.is_open())
+			std::cout << help.rdbuf();
 	}
 	else if (action == "take") {
 		//check if it is a Look or a Look + args

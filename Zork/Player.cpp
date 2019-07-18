@@ -72,6 +72,19 @@ void Player::PrintStats() {
 
 }
 
+void Player::PrintInventory() {
+	vector<Item*> inventory = GetItems();
+	cout << "\n\nInventory: \n";
+	for (size_t i = 0; i < inventory.size(); i++) {
+		cout << " - " << inventory[i]->name;
+		if (IsEquipped(inventory[i]->name))
+			cout << " - Equipped. \n";
+		else
+			cout << "\n";
+	}
+
+}
+
 void Player::ChangeRoom(Exit* exit) {
 	if (exit->locked) {
 		cout << "Exit locked, you need to find the way to unlock it. \n";
