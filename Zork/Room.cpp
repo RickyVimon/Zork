@@ -63,9 +63,9 @@ vector<Exit*> Room::GetExits() {
 	vector<Exit*> out;
 	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
 	{
-		Exit* ent = (Exit*)*it;
-		if (ent->type = EXIT) {
-			out.push_back(ent);
+		Entity* ent = (Entity*)*it;
+		if (ent->type == EXIT) {
+			out.push_back((Exit*)ent);
 		}
 	}
 	return out;
@@ -79,6 +79,35 @@ vector<Item*> Room::GetItems() {
 		if (ent->type == ITEM) {
 			out.push_back((Item*)ent);
 		}
+	}
+	return out;
+}
+
+vector<Enemy*> Room::GetEnemies() {
+	vector<Enemy*> out;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
+		Entity* ent = *it;
+		if (ent->type == ENEMY) {
+			out.push_back((Enemy*)ent);
+		}
+	}
+	return out;
+}
+
+void Room::RemoveEnemy(string enemyname) {
+	vector<Enemy*> enemies = GetEnemies();
+	for (rsize_t i = 0; i< enemies.size(); i++){
+		if(Universal::ToLowerString(enemies[0]->name) == Universal::ToLowerString(enemyname))
+			container.erase(std::remove(container.begin(), container.end(), (Entity*)enemies[i]), container.end());
+	}
+}
+
+vector<string> Room::GetEnemiesNames() {
+	vector<string> out;
+	vector<Enemy*> enemies = GetEnemies();
+	for (size_t i = 0; i < enemies.size(); i++) {
+		out.push_back(enemies[i]->name);
 	}
 	return out;
 }

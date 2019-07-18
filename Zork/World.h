@@ -22,6 +22,8 @@ public:
 	void Command(string input);
 	void UserInput();
 	void Move(string direction);
+	bool game_over;
+	bool game_completed;
 
 private:
 	vector<Entity*> entities;

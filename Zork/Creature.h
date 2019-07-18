@@ -10,6 +10,7 @@
 #include <list>
 
 
+
 using namespace std;
 
 
@@ -27,18 +28,18 @@ public:
 	void Drop(Item* item);
 	void Take(Item* item);
 	void Equip(string itemname);
-	void Unequip(Item* item);
+	void Unequip(string itemname);
 	void UpdateArmor(int value);
+	Item* GetWeapon();
+	bool Attack();
+	//bool Attack(string target);
+	void GainExp(int gainexp);
 	vector<Item*> GetItems();
-	Item * GetItems(string name);
+	Item* GetItems(string name);
 	vector<string> GetItemsNames();
 	bool IsEquipped(string itemname);
+	bool IsAlive();
 
-protected:
-	Room* actualroom;
-	//list<Item*> equiped;
-	map<string, int> stats;
-	list<Item*> equiped;
 	int str;
 	int str_mod;
 	int dex;
@@ -50,6 +51,13 @@ protected:
 	int ac;
 	int lvl;
 	int exp;
+
+protected:
+	Room* actualroom;
+	//list<Item*> equiped;
+	map<string, int> stats;
+	list<Item*> equiped;
+
 };
 
 #endif //__Creature__

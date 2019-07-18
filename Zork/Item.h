@@ -18,14 +18,13 @@ public:
 	~Item();
 	void ChangeStat(int value);
 	void EquipItem();
-
-	void Unnequip();
+	void UnequipItem();
+	int damage;
+	ItemType item_type;
 
 private:
 	vector<Item*> GetItems();
-	int damage;
 	int armor;
-	ItemType item_type;
 	string stat_name_mod;
 	int value_mod;
 };

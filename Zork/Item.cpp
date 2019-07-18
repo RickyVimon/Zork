@@ -52,7 +52,7 @@ void Item::EquipItem() {
 	ChangeStat(value_mod);
 }
 
-void Item::Unnequip() {
+void Item::UnequipItem() {
 	ChangeStat ((-1) * value_mod);
 }
 

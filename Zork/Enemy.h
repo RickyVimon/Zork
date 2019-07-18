@@ -1,5 +1,6 @@
 #ifndef __Enemy__
 #define __Enemy__
+
 #include "Creature.h"
 #include "Room.h"
 #include <nlohmann/json.hpp>

@@ -17,7 +17,10 @@
 
 World::World()
 {
-	default_commands = { "look","move","attack","use","equip","unnequip", "take", "drop","stats","help", "north", "south", "east", "west" };
+	game_completed = false;
+	game_over = false;
+
+	default_commands = { "look","move","attack","use","equip","unequip", "take", "drop","stats","help", "north", "south", "east", "west" };
 	directions = { "north", "south", "east", "west" };
 	//intro:----------------------------------------------------------------------------------------------------------------------------
 	std::ifstream f("title.txt");
@@ -33,20 +36,18 @@ World::World()
 	Room* garden = new Room("Garden", "\nThe gardens of the royality have been the jewel of the crown, with flowers from all the colours of the rainbow. There is a wanter fountain in the middle of the garden and a huge door on the north.\n");
 	Room* hall = new Room("Hall", "\nThis is the hall of the castle, you can see the King's Throne shinig at the end of the saloon.\n");
 
-	rooms.push_back(entrance);
-	rooms.push_back(coutyard);
-	rooms.push_back(armory);
-	rooms.push_back(barracks);
-	rooms.push_back(garden);
-	rooms.push_back(hall);
+	entities.push_back(entrance);
+	entities.push_back(coutyard);
+	entities.push_back(armory);
+	entities.push_back(barracks);
+	entities.push_back(garden);
+	entities.push_back(hall);
 
 	Exit* entrance_door = new Exit("North", "South", "Entrance door", "", entrance, coutyard);
 	Exit* east_corridor = new Exit("East", "West", "Armory corridor", "", coutyard, armory);
 	Exit* west_corrifor = new Exit("West", "East", "Barracks corridor", "", coutyard, barracks);
 	Exit* stairs = new Exit("North", "South", "Garden stairs", "", coutyard, garden);
 	Exit* hall_door = new Exit("North", "South", "Hall's Door", "", garden, hall);
-
-	stairs->locked = true;
 
 	entities.push_back(entrance_door);
 	entities.push_back(east_corridor);
@@ -57,7 +58,7 @@ World::World()
 
 
 	//Creating Enemies:--------------------------------------------------------------------------------------------------------------
-	Enemy* dummy = new Enemy("Dummy", "A wooden training target, you can try to attack it.\n", entrance);
+	Enemy* dummy = new Enemy("Dummy", "A wooden training target, you can try to attack it.\n", coutyard);
 	Enemy* thief = new Enemy("Thief", "A thief if trying to scape from the authorities! Attack him before he attacks you!\n", hall);
 
 	entities.push_back(dummy);
@@ -69,17 +70,15 @@ World::World()
 	Item* hall_key = new Item("Key", "It has the symbol of the royalty family on the bottom", chest, 0, COMMON);
 	Item* sword = new Item("Sword", "A one-handed sword", armory, 10, WEAPON);
 	Item* shield = new Item("Shield", "A wooden rounded shape shield", armory, 2, ARMOR);
-	Item* dane_axe = new Item("Axe", "A great Dane axe with a long wooden shaft of around 1,5 meters", armory, 12, WEAPON);
-	Item* spear = new Item("Spear", "A piercing spear of around 2m long", armory, 10, WEAPON);
+	Item* helmet = new Item("helmet", "A basic steel helmet, it offer nice protection against headshots.", dummy, 1, ARMOR);
 	Item* dagger = new Item("Dagger", "A lethal dagger if it's used by the right hands.", thief, 6, WEAPON);
+	Item* stick = new Item("stick", "Just a training wood stick.", dummy, 2, WEAPON);
 	Item* chainshirt = new Item("Chainshirt", "An smaller version of a chainmail. It offers a decent amount of protection.", entrance, 2, ARMOR);
 
 	entities.push_back(chest);
 	entities.push_back(hall_key);
 	entities.push_back(sword);
 	entities.push_back(shield);
-	entities.push_back(dane_axe);
-	entities.push_back(spear);
 
 	//Creating Player:---------------------------------------------------------------------------------------------------------------
 
@@ -125,7 +124,7 @@ World::World()
 			if (Universal::ToLowerString(input_text) == "berserker") {
 				player->SetStats(name, BERSERKER);
 				Command("look");
-char_created = true;
+				char_created = true;
 			}
 			else if (Universal::ToLowerString(input_text) == "slayer") {
 			player->SetStats(name, SLAYER);
@@ -154,8 +153,7 @@ World::~World()
 
 void World::UserInput() {
 	char key;
-	bool game_over = 0;
-	while (!game_over) {
+	while (!game_over && !game_completed) {
 		key = _getch();
 		if (key == '\b') // backspace
 		{
@@ -198,11 +196,19 @@ void World::Command(string input) {
 	if (action == "look") {
 		//check if it is a Look or a Look + args
 		if (input != "look") {
+			vector<Item*> items = player->GetRoom()->GetItems();
+			vector<Enemy*> enemies = player->GetRoom()->GetEnemies();
+			vector<string> enemy_names = player->GetRoom()->GetEnemiesNames();
 			vector<string> item_names = player->GetRoom()->GetItemsNames();
 			string itemname = ParseCommand(input, item_names);
 			for (size_t j = 0; j < items.size(); j++) {
 				if (Universal::ToLowerString(items[j]->name) == itemname)
 					cout << "\nYou take a closer look to the " << items[j]->name << ". " << items[j]->description << ".\n";
+			}
+			string enemyname = ParseCommand(input, enemy_names);
+			for (size_t j = 0; j < enemies.size(); j++) {
+				if (Universal::ToLowerString(enemies[j]->name) == enemyname)
+					cout << "\nYou take a careful look to the  enemy " << enemies[j]->name << ". " << enemies[j]->description << ".\n";
 			}
 		}
 		else {
@@ -212,6 +218,14 @@ void World::Command(string input) {
 	}
 	else if (action == "north" || action == "south" || action == "west" || action == "east") {
 		Move(action);
+		player->GetRoom()->Look();
+		input_text = "";
+	}
+	else if (action == "move") {
+		direction = ParseCommand(input, directions);
+		Move(direction);
+		player->GetRoom()->Look();
+		input_text = "";
 	}
 	else if (action == "stats") {
 		player->PrintStats();
@@ -274,15 +288,26 @@ void World::Command(string input) {
 			}
 		}else 
 			cout << "\nYou forgot to write what do you want to Equip.\n";
-
 	}
-	else if (action == "move") {
-		direction = ParseCommand(input, directions);
-		Move(direction);
+	else if (action == "unequip") {
+		if (input != "unequip") {
+			vector<string> item_names = player->GetItemsNames();
+			string itemname = ParseCommand(input, item_names);
+			if (itemname != "") {
+				player->Unequip(itemname);
+				cout << "\n" << player->GetItems(itemname)->name << " unequiped.\n";
+			}
+			else
+			{
+				cout << "\nI don't really know what is that, it's looks like you want to equip something but you haven't used the right command.\n";
+			}
+		}
+		else
+			cout << "\nYou forgot to write what do you want to Equip.\n";
 	}
-	else if (action == "attack") {
-		//auto it = find_if(enemies.begin(), enemies.end(), [&myString](const Enemy& obj) {return obj.getName() == myString;})
 
+	else if (action == "attack") {		
+		game_completed = player->Attack();
 	}
 }
 

@@ -7,6 +7,7 @@
 
 class Item;
 class Exit;
+class Enemy;
 
 using namespace std;
 
@@ -19,6 +20,9 @@ public:
 	void Look();
 	string GetName();
 	vector<Item*> GetItems();
+	vector<Enemy*> GetEnemies();
+	void RemoveEnemy(string enemyname);
+	vector<string> GetEnemiesNames();
 	vector<string> GetItemsNames();
 	Item * GetItems(string name);
 	vector<Exit*> GetExits();

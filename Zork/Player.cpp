@@ -73,10 +73,11 @@ void Player::PrintStats() {
 }
 
 void Player::ChangeRoom(Exit* exit) {
-	if (!exit->locked) {
-	cout << "Exit locked, you need to find the way to unlock it. \n";
+	if (exit->locked) {
+		cout << "Exit locked, you need to find the way to unlock it. \n";
 	}
-	actualroom = exit->NextRoom(GetRoom());
+	else
+		actualroom = exit->NextRoom(GetRoom());
 
 }
 
@@ -94,9 +95,10 @@ bool Player::LeaveRoom(string direction) {
 	vector<Exit*> exits = actualroom->GetExits();
 	for (size_t i = 0; i < exits.size(); i++)
 	{
+
 		if (Universal::ToLowerString(exits[i]->CheckRoom(GetRoomName())) == direction) {
 			//exit encontrada
-			if (!exits[i]->locked) {
+			if (exits[i]->locked) {
 				cout << "\n The " << exits[i]->name << " is locked, you should find the way to unlock it.\n";
 				return false;
 			}				
