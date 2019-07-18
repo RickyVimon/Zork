@@ -19,6 +19,7 @@ public:
 	void ChangeStat(int value);
 	void EquipItem();
 	void UnequipItem();
+	Item * GetInternalItems(string name);
 	int damage;
 	ItemType item_type;
 

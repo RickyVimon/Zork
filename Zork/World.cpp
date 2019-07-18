@@ -204,6 +204,13 @@ void World::Command(string input) {
 			for (size_t j = 0; j < items.size(); j++) {
 				if (Universal::ToLowerString(items[j]->name) == itemname)
 					cout << "\nYou take a closer look to the " << items[j]->name << ". " << items[j]->description << ".\n";
+				if (items[j]->container.size() > 0) {//this object contains something
+					cout << "\nThis " << items[j]->name << " contains: \n";
+					for (std::list<Entity*>::iterator it = items[j]->container.begin(); it != items[j]->container.end(); ++it) {
+						Item* ent = (Item*)*it;
+						cout << " - " << ent->name << ".\n";
+					}
+				}
 			}
 			string enemyname = ParseCommand(input, enemy_names);
 			for (size_t j = 0; j < enemies.size(); j++) {
@@ -236,8 +243,20 @@ void World::Command(string input) {
 	else if (action == "take") {
 		//check if it is a Look or a Look + args
 		if (input != "take") {
-			vector<string> item_names = player->GetRoom()->GetItemsNames();
-			string itemname = ParseCommand(input, item_names);
+			vector<Item*> room_item = player->GetRoom()->GetItems();
+			vector<string> room_itemnames = player->GetRoom()->GetItemsNames();
+			vector<string> internal_items;
+
+			for (size_t i = 0; i < room_item.size(); i++) {
+				if (room_item[0]->container.size() > 0) { //this item contains another item inside
+					for (std::list<Entity*>::iterator it = room_item[i]->container.begin(); it != room_item[i]->container.end(); ++it) {
+						Item* ent = (Item*)*it;
+						internal_items.push_back(ent->name);
+					}
+				}
+			}
+			string itemname = ParseCommand(input, room_itemnames);
+			string internal_itemsnames = ParseCommand(input, internal_items);
 			if (itemname != "") {
 				Item* item = player->GetRoom()->GetItems(itemname);
 				if (item != NULL) {
@@ -254,10 +273,28 @@ void World::Command(string input) {
 					input_text = "";
 				}
 			}
+			else if (internal_itemsnames != "") {
+				//Item* item = player->GetRoom()->GetItems()->GetInternalItems(internal_itemsnames);
+				for (size_t i = 0; i < room_item.size(); i++) {
+					if (room_item[0]->container.size() > 0) { //this item contains another item inside
+						for (std::list<Entity*>::iterator it = room_item[i]->container.begin(); it != room_item[i]->container.end(); ++it) {
+							Item* ent = (Item*)*it;
+							Item* cont = (Item*)ent->parent;
+							if (Universal::ToLowerString(internal_itemsnames) == Universal::ToLowerString(ent->name)) {
+								//take item
+								player->Take(ent);
+								cont->container.erase(std::remove(cont->container.begin(), cont->container.end(), (Entity*)ent), cont->container.end());
+								return;
+							}
+						}
+					}
+				}
+			}
 			else
 				cout << "\nThere is no " << input << " you can take.\n";
 		}
 	}
+
 	else if (action == "drop") {
 		//check if it is a Look or a Look + args
 		if (input != "drop") {

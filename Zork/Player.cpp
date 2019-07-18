@@ -105,7 +105,8 @@ bool Player::LeaveRoom(string direction) {
 			ChangeRoom(exits[i]);
 			return true;
 		}
-		cout << "\n" << GetRoom()->name << " has no exit on the " << direction << ".\n";
+		
 	}
+	cout << "\n" << GetRoom()->name << " has no exit on the " << direction << ".\n";
 	return false;
 }

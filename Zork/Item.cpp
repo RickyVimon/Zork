@@ -55,6 +55,17 @@ void Item::EquipItem() {
 void Item::UnequipItem() {
 	ChangeStat ((-1) * value_mod);
 }
-
+Item* Item::GetInternalItems(string name) {
+	Item* out = NULL;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
+		Item* ent = (Item*)*it;
+		if (ent->type == ITEM && Universal::ToLowerString(ent->name) == name) {
+			out = ent;
+			return out;
+		}
+	}
+	return out;
+}
 
 

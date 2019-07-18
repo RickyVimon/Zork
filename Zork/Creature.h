@@ -27,6 +27,7 @@ public:
 	void AutoEquip(Item* item);
 	void Drop(Item* item);
 	void Take(Item* item);
+	void TakeInternal(Item * item);
 	void Equip(string itemname);
 	void Unequip(string itemname);
 	void UpdateArmor(int value);

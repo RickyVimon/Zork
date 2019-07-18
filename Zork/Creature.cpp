@@ -51,6 +51,8 @@ void Creature::Take(Item* item) {
 	container.push_back(item);
 	cout << "\n" << item->name << " is now in your inventory.\n";
 }
+
+
 void Creature::Equip(string itemname) {
 	Item* item = GetItems(itemname);
 	if (item != NULL) {
