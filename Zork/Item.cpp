@@ -38,12 +38,34 @@ vector<Item*> Item::GetItems() {
 	return out;
 }
 
-void Item::ChangeStat(string stat_name, int value) {
-	string st = stat_name;
+void Item::ChangeStat(int value) {
 	int val = value;
 	Creature* crt = (Creature*)parent;
-	crt->UpdateStats(st, val);
+	switch (this->item_type) {
+	case(ARMOR):
+		crt->UpdateArmor(val);
+		break;
+	}
 }
 
+void Item::EquipItem() {
+	ChangeStat(value_mod);
+}
+
+void Item::UnequipItem() {
+	ChangeStat ((-1) * value_mod);
+}
+Item* Item::GetInternalItems(string name) {
+	Item* out = NULL;
+	for (std::list<Entity*>::iterator it = container.begin(); it != container.end(); ++it)
+	{
+		Item* ent = (Item*)*it;
+		if (ent->type == ITEM && Universal::ToLowerString(ent->name) == name) {
+			out = ent;
+			return out;
+		}
+	}
+	return out;
+}
 
 

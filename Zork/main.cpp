@@ -13,28 +13,21 @@ using namespace std;
 
 int main()
 {
+	World my_world;
 	try {
-
-		bool game_completed = 0;
-		bool char_created = 0;
-
-		World my_world;
-
-		while (!game_completed)
+		while (!my_world.game_completed)
 		{
 			my_world.UserInput();
 			break;
 		}
 		return 0;
 	}
-	catch (exception const & e) {
+	catch (const std::exception& ex) {
 		cout << "error exception";
-		main();
+		my_world.UserInput();
 		return 0;
 	}
 
 }
-void CharacterCreation() {
 
-}
 

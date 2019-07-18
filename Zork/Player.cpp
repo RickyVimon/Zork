@@ -10,7 +10,6 @@
 Player::Player(string name, string description, Room* room) :
 	Creature(name, description, room)
 {
-	actualroom = room;
 	type = PLAYER;
 }
 
@@ -46,14 +45,14 @@ void Player::SetStats(string name, Hero_Class role)
 	max_health = con * lvl;
 	health = max_health;
 	ac = 10;
-	stats.emplace("Armor", &str);
-	stats.emplace("Dexterity", &dex);
-	stats.emplace("Constitution", &con);
-	stats.emplace("Armor", &ac);
-	stats.emplace("Health", &health);
-	stats.emplace("MaxHealth", &max_health);
-	stats.emplace("Level", &lvl);
-	stats.emplace("Experience", &exp);
+	stats.emplace("Armor", str);
+	stats.emplace("Dexterity", dex);
+	stats.emplace("Constitution", con);
+	stats.emplace("Armor", ac);
+	stats.emplace("Health", health);
+	stats.emplace("MaxHealth", max_health);
+	stats.emplace("Level", lvl);
+	stats.emplace("Experience", exp);
 
 
 	cout << "\n" << heroclass << " created succesfuly. You can take a look at your Stats.\n";
@@ -73,11 +72,25 @@ void Player::PrintStats() {
 
 }
 
-void Player::ChangeRoom(Exit* exit) {
-	if (!exit->locked) {
-	cout << "Exit locked, you need to find the way to unlock it. \n";
+void Player::PrintInventory() {
+	vector<Item*> inventory = GetItems();
+	cout << "\n\nInventory: \n";
+	for (size_t i = 0; i < inventory.size(); i++) {
+		cout << " - " << inventory[i]->name;
+		if (IsEquipped(inventory[i]->name))
+			cout << " - Equipped. \n";
+		else
+			cout << "\n";
 	}
-	actualroom = exit->NextRoom(GetRoom());
+
+}
+
+void Player::ChangeRoom(Exit* exit) {
+	if (exit->locked) {
+		cout << "Exit locked, you need to find the way to unlock it. \n";
+	}
+	else
+		actualroom = exit->NextRoom(GetRoom());
 
 }
 
@@ -95,16 +108,18 @@ bool Player::LeaveRoom(string direction) {
 	vector<Exit*> exits = actualroom->GetExits();
 	for (size_t i = 0; i < exits.size(); i++)
 	{
+
 		if (Universal::ToLowerString(exits[i]->CheckRoom(GetRoomName())) == direction) {
 			//exit encontrada
-			if (!exits[i]->locked) {
+			if (exits[i]->locked) {
 				cout << "\n The " << exits[i]->name << " is locked, you should find the way to unlock it.\n";
 				return false;
 			}				
 			ChangeRoom(exits[i]);
 			return true;
 		}
-		cout << "\n" << GetRoom()->name << " has no exit on the " << direction << ".\n";
+		
 	}
+	cout << "\n" << GetRoom()->name << " has no exit on the " << direction << ".\n";
 	return false;
 }

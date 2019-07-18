@@ -14,15 +14,18 @@ class Item :
 	public Entity
 {
 public:
-	Item(string name, string description, Entity* parent, int value, ItemType item_type = COMMON);
+	Item(string name, string description, Entity* parent, int value, ItemType item_type);
 	~Item();
-	void ChangeStat(string stat_name, int value);
+	void ChangeStat(int value);
+	void EquipItem();
+	void UnequipItem();
+	Item * GetInternalItems(string name);
+	int damage;
+	ItemType item_type;
 
 private:
 	vector<Item*> GetItems();
-	int damage;
 	int armor;
-	ItemType item_type;
 	string stat_name_mod;
 	int value_mod;
 };
